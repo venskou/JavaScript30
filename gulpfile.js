@@ -22,16 +22,19 @@ const dirs = {
     html: 'tasks/**/*.html',
     styles: 'tasks/**/*.scss',
     js: 'tasks/**/*.js',
+    vendors: 'tasks/**/vendors/*.*',
   },
   dist: {
     html: 'dist/',
     styles: 'dist/',
     js: 'dist/',
+    vendors: 'dist/',
   },
   watch: {
     html: 'tasks/**/*.html',
     styles: 'tasks/**/*.scss',
     js: 'tasks/**/*.js',
+    vendors: 'tasks/**/vendors/*.*',
   },
   clean: ['dist/*']
 };
@@ -112,11 +115,19 @@ function buildJS(done) {
   done();
 }
 
+// Copy vendors
+function copyVendors(done) {
+  gulp.src(dirs.src.vendors)
+    .pipe(gulp.dest(dirs.dist.vendors));
+  done();
+}
+
 // Watch files
 function watch() {
   gulp.watch(dirs.watch.html, gulp.series(buildHTML, reloadServer));
   gulp.watch(dirs.watch.styles, gulp.series(buildStyles, reloadServer));
   gulp.watch(dirs.watch.js, gulp.series(buildJS, reloadServer));
+  gulp.watch(dirs.watch.vendors, gulp.series(copyVendors, reloadServer));
 }
 
 // Export tasks
@@ -126,7 +137,8 @@ exports.clean = clean;
 exports.buildHTML = buildHTML;
 exports.buildStyles = buildStyles;
 exports.buildJS = buildJS;
-const build = gulp.series(clean, gulp.parallel(buildHTML, buildStyles, buildJS));
+exports.copyVendors = copyVendors;
+const build = gulp.series(clean, gulp.parallel(buildHTML, buildStyles, buildJS, copyVendors));
 exports.build = build;
 
 // Default task
