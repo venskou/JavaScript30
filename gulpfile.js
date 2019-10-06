@@ -99,8 +99,8 @@ function buildStyles(done) {
 }
 
 // Build JS
-function buildJS(done) {
-  gulp.src(dirs.src.js)
+function buildJS() {
+   return gulp.src(dirs.src.js)
     .pipe(plumber())
     .pipe(babel({
       presets: ['@babel/env']
@@ -112,7 +112,6 @@ function buildJS(done) {
       extname: '.js'
     }))
     .pipe(gulp.dest(dirs.dist.js));
-  done();
 }
 
 // Copy vendors
