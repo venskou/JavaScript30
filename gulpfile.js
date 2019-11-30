@@ -5,15 +5,11 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const htmlhint = require('gulp-htmlhint');
 const prettyHtml = require('gulp-pretty-html');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 sass.compiler = require('node-sass');
-const cssnano = require('gulp-cssnano');
 const autoprefixer = require('gulp-autoprefixer');
 const rimraf = require('gulp-rimraf');
-const imagemin = require('gulp-imagemin');
 const babel = require('gulp-babel');
 
 // Config directories
@@ -65,8 +61,8 @@ function clean() {
 }
 
 // Build HTML
-function buildHTML(done) {
-  gulp.src(dirs.src.html)
+function buildHTML() {
+  return gulp.src(dirs.src.html)
     .pipe(prettyHtml({
       indent_size: 2,
       extra_liners: [],
@@ -74,12 +70,11 @@ function buildHTML(done) {
     .pipe(htmlhint('.htmlhintrc'))
     .pipe(htmlhint.reporter())
     .pipe(gulp.dest(dirs.dist.html));
-  done();
 }
 
 // Build styles
-function buildStyles(done) {
-  gulp.src(dirs.src.styles)
+function buildStyles() {
+  return gulp.src(dirs.src.styles)
     .pipe(plumber())
     .pipe(sass({
       outputStyle: 'expanded',
@@ -88,14 +83,7 @@ function buildStyles(done) {
     .pipe(autoprefixer({
       cascade: true
     }))
-    .pipe(gulp.dest(dirs.dist.styles))
-    .pipe(cssnano())
-    .pipe(rename({
-      suffix: '.min',
-      extname: '.css',
-    }))
     .pipe(gulp.dest(dirs.dist.styles));
-  done();
 }
 
 // Build JS
@@ -105,20 +93,13 @@ function buildJS() {
     .pipe(babel({
       presets: ['@babel/env']
     }))
-    .pipe(gulp.dest(dirs.dist.js))
-    .pipe(uglify())
-    .pipe(rename({
-      suffix: '.min',
-      extname: '.js'
-    }))
     .pipe(gulp.dest(dirs.dist.js));
 }
 
 // Copy vendors
-function copyVendors(done) {
-  gulp.src(dirs.src.vendors)
+function copyVendors() {
+  return gulp.src(dirs.src.vendors)
     .pipe(gulp.dest(dirs.dist.vendors));
-  done();
 }
 
 // Watch files
