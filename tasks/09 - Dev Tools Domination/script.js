@@ -62,6 +62,7 @@ fetch('https://api.github.com/users/venskou')
 .then(data => data.json())
 .then(data => {
   console.timeEnd('fetching data');
-})
+});
 
 console.table(dogs)
+;
