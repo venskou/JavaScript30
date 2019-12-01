@@ -4,7 +4,7 @@
 
 This repository is created to keep track of my progress in the awesome JavaScript 30 Day Challenge.
 
-## Table Of Contents 
+## Table Of Contents - [Demo page](http://venskou.name/JavaScript30/)
 | No | Name | Code | Demo |
 | --- | --- | --- | --- |
 | 01 | JavaScript Drum Kit | [Code](https://github.com/venskou/JavaScript30/tree/master/tasks/01%20-%20JavaScript%20Drum%20Kit) | [Demo](http://venskou.name/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/) |
